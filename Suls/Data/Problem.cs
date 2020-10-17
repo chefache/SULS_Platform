@@ -11,7 +11,9 @@ namespace Suls.Data
         public Problem()
         {
             Id = Guid.NewGuid().ToString();
+            this.Submissions = new HashSet<Submission>();
         }
+
         [Key]
         public string Id { get; set; }
 
@@ -20,7 +22,9 @@ namespace Suls.Data
         public string Name { get; set; }
 
         [Required]
-        public uint Points { get; set; }
+        public ushort Points { get; set; }
+
+        public virtual ICollection<Submission> Submissions { get; set; }
     }
 
   // Has an Id – a string, Primary Key

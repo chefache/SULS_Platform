@@ -1,4 +1,6 @@
-﻿using SUS.HTTP;
+﻿using Microsoft.EntityFrameworkCore;
+using Suls.Data;
+using SUS.HTTP;
 using SUS.MvcFramework;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ namespace Suls
     {
         public void Configure(List<Route> routeTable)
         {
+            new ApplicationDbContext().Database.Migrate();
         }
 
         public void ConfigureServices(IServiceCollection serviceCollection)

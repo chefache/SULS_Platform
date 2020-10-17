@@ -20,16 +20,16 @@ namespace Suls.Data
         public string Code { get; set; }
 
         [Required]
-        public uint Results { get; set; }
+        public ushort AchievedResults { get; set; }
 
         [Required]
         public DateTime CreatedOn { get; set; }
 
         public string ProblemId { get; set; }
-        public Problem Problem { get; set; }
+        public virtual Problem Problem { get; set; }
 
         public string UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
    // Has an Id – a string, Primary Key
    // Has Code – a string with min length 30 and max length 800 (required)

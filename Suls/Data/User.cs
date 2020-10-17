@@ -10,6 +10,7 @@ namespace Suls.Data
         public User()
         {
             Id = Guid.NewGuid().ToString();
+            this.Submissions = new HashSet<Submission>();
         }
 
         [Key]
@@ -22,8 +23,11 @@ namespace Suls.Data
         [Required]
         public string Email { get; set; }
 
-        [MaxLength(20)]
+        [Required]
         public string Password { get; set; }
+
+        public virtual ICollection <Submission> Submissions { get; set; }
+       
     }
 
     // Has an Id – a string, Primary Key
