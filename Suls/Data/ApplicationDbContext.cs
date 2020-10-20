@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Suls.Data
 {
-    class ApplicationDbContext: DbContext
+    public class ApplicationDbContext: DbContext
     {
         public ApplicationDbContext()
         {
