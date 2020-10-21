@@ -13,7 +13,5 @@ namespace Suls.ViewModels.Users
         public string Password { get; set; }
 
         public string ConfirmPassword { get; set; }
-
-
     }
 }

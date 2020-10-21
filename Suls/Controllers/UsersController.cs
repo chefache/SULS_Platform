@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
 using Suls.Services;
+using Suls.ViewModels.Users;
 using SUS.HTTP;
 using SUS.MvcFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Suls.Controllers
@@ -41,7 +44,46 @@ namespace Suls.Controllers
         }
         [HttpPost]
         public HttpResponse Register(RegisterInputModel input)
-        { 
+        {
+            if (string.IsNullOrEmpty(input.Username) || input.Username.Length < 5 || input.Username.Length > 20)
+            {
+                return this.Error("Username should be betwean 5 and 20 characters!!");
+            }
+
+            if (!this.usersService.IsUsernameAvailable(input.Username))
+            {
+                return this.Error("Username already taken!");
+            }
+
+            if (string.IsNullOrEmpty(input.Email) || !new EmailAddressAttribute().IsValid(input.Email))
+            {
+                return this.Error("Invalid email address!");
+            }
+
+            if (!this.usersService.IsEmailAvailable(input.Email))
+            {
+                return this.Error("Email already taken!");
+            }
+
+            if (string.IsNullOrEmpty(input.Password) || input.Password.Length < 6 || input.Password.Length > 20 )
+            {
+                return this.Error("Password should be between 6 and 20 characters.");
+            }
+
+            if (input.Password != input.ConfirmPassword)
+            {
+                return this.Error("Passwords must be the same!");
+            }
+
+            this.usersService.CreateUser(input.Username, input.Email, input.Password);
+
+            return this.Redirect("/Users/Login");
+        }
+
+        public HttpResponse Logout()
+        {
+            this.SignOut();
+            return this.Redirect("/");
         }
     }
 }
