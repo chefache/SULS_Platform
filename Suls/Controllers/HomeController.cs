@@ -1,4 +1,5 @@
-﻿using Suls.ViewModels.Problems;
+﻿using Suls.Services;
+using Suls.ViewModels.Problems;
 using SUS.HTTP;
 using SUS.MvcFramework;
 using System;
@@ -9,12 +10,20 @@ namespace Suls.Controllers
 {
     public class HomeController:Controller
     {
+        private readonly IProblemsService problemsService;
+
+        public HomeController(IProblemsService problemsService)
+        {
+            this.problemsService = problemsService;
+        }
+
         [HttpGet("/")]
         public HttpResponse Index()
         {
             if (this.IsUserSignedIn())
             {
-                return this.View(new List<HomePageProblemViewModel>(), "IndexLoggedIn");
+                var viewModel = problemsService.GetAll();
+                return this.View(viewModel, "IndexLoggedIn");
             }
             else
             {
